@@ -27,7 +27,5 @@
       wait_for_connection:
         delay: 1
         timeout: 180
-    - name: Gather facts after connection is established
-      ansible.builtin.setup:
   roles:
-    - role: tpl
+    - role: gather

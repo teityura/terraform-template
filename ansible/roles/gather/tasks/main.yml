@@ -1,5 +1,8 @@
+- name: Gather facts after connection is established
+  setup:
+
 - name: Display host information from gathered facts
-  ansible.builtin.debug:
+  debug:
     msg: |
       --- inventory_hostname ---
       {{ inventory_hostname }}
