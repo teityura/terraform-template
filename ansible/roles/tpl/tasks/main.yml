@@ -1,0 +1,9 @@
+- name: Display host information from gathered facts
+  ansible.builtin.debug:
+    msg: |
+      --- inventory_hostname ---
+      {{ inventory_hostname }}
+      --- ansible_host (from tfstate) ---
+      {{ ansible_host }}
+      --- ansible_all_ipv4_addresses (from facts) ---
+      {{ ansible_all_ipv4_addresses | join(', ') }}

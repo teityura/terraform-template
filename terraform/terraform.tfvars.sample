@@ -1,0 +1,10 @@
+server_config = {
+  name            = "tpl"
+  flavor_id       = "xxxxx"
+  image_id        = "xxxxx"
+  key_pair        = "key_name"
+  volume_size     = 30
+  security_groups    = ["security_group1"]
+  net_int            = "int_net"
+  net_ext            = "ext_net"
+}

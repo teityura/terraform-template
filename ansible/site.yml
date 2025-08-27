@@ -1,0 +1,33 @@
+- hosts: localhost
+  become: yes
+  gather_facts: yes
+  gather_subset: min
+  vars_files:
+    - ../config.yml
+  tasks:
+    - name: Get server details from terraform output
+      cloud.terraform.terraform_output:
+        state_file: ../terraform/terraform.tfstate
+        name: server_details
+      register: _result_tfo
+
+    - name: Define server host in dynamic inventory
+      add_host:
+        name: "{{ _result_tfo.value.name }}"
+        groups: vms
+        ansible_host: "{{ _result_tfo.value.floating_ip }}"
+        ansible_user: "{{ ssh_user }}"
+        ansible_ssh_private_key_file: "{{ ssh_key_path }}"
+
+- hosts: vms
+  become: yes
+  gather_facts: no
+  pre_tasks:
+    - name: Wait for SSH connection to be available
+      wait_for_connection:
+        delay: 1
+        timeout: 180
+    - name: Gather facts after connection is established
+      ansible.builtin.setup:
+  roles:
+    - role: tpl

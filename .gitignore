@@ -1,0 +1,12 @@
+# Local configuration files (sensitive or user-specific)
+config.yml
+terraform/terraform.tfvars
+
+# Terraform generated files (state, plugins, locks)
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+
+# Manually downloaded provider binaries
+terraform/linux_amd64/
