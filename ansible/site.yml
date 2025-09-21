@@ -9,15 +9,24 @@
       cloud.terraform.terraform_output:
         state_file: ../terraform/terraform.tfstate
         name: server_details
-      register: _result_tfo
+      register: _result_tfo_main
+
+    - name: Get volume details from terraform output
+      cloud.terraform.terraform_output:
+        state_file: ../terraform/terraform.tfstate
+        name: volume_details
+      register: _result_tfo_vol
+      failed_when: false
 
     - name: Define server host in dynamic inventory
       add_host:
-        name: "{{ _result_tfo.value.name }}"
+        name: "{{ _result_tfo_main.value.name }}"
         groups: vms
-        ansible_host: "{{ _result_tfo.value.floating_ip }}"
+        ansible_host: "{{ _result_tfo_main.value.floating_ip }}"
         ansible_user: "{{ ssh_user }}"
         ansible_ssh_private_key_file: "{{ ssh_key_path }}"
+        vol_device_path: "{{ _result_tfo_vol.value.device | default(omit) }}"
+        vol_mount_path: "{{ volume_mount_path | default(omit) }}"
 
 - hosts: vms
   become: yes
@@ -28,4 +37,4 @@
         delay: 1
         timeout: 180
   roles:
-    - role: gather
+    - role: setup

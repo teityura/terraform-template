@@ -1,0 +1,17 @@
+- name: Create filesystem
+  filesystem:
+    fstype: ext4
+    dev: "{{ vol_device_path }}"
+
+- name: Create mount point
+  file:
+    path: "{{ vol_mount_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Mount volume
+  mount:
+    path: "{{ vol_mount_path }}"
+    src: "{{ vol_device_path }}"
+    fstype: ext4
+    state: mounted
