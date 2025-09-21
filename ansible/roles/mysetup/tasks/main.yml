@@ -1,0 +1,6 @@
+- name: Gather facts
+  import_tasks: gather_facts.yml
+
+- name: Mount data volume
+  import_tasks: mount_disk.yml
+  when: vol_device_path is defined
