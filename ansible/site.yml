@@ -37,4 +37,4 @@
         delay: 1
         timeout: 180
   roles:
-    - role: mysetup
+    - role: setup

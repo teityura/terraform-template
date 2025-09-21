@@ -8,3 +8,7 @@ server_config = {
   net_int = "int_net"
   net_ext = "ext_net"
 }
+
+# volume_config = {
+#   volume_size = 50
+# }
