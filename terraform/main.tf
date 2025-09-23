@@ -10,37 +10,22 @@ terraform {
 
 provider "openstack" {}
 
-resource "openstack_blockstorage_volume_v3" "main" {
-  name = "${var.server_config.name}-root"
-  size = var.server_config.volume_size
-  image_id = var.server_config.image_id
-  enable_online_resize = true
+locals {
+  config = yamldecode(file("../config.yml"))
 }
 
-resource "openstack_compute_instance_v2" "main" {
-  name = var.server_config.name
-  flavor_id = var.server_config.flavor_id
-  key_pair = var.server_config.key_pair
-  security_groups = var.server_config.security_groups
+module "ssh_config" {
+  source = "git::https://github.com/teityura/terraform-modules.git//ssh-config"
 
-  network {
-    name = var.server_config.net_int
-  }
-
-  block_device {
-    uuid = openstack_blockstorage_volume_v3.main.id
-    source_type = "volume"
-    destination_type = "volume"
-    boot_index = 0
-    delete_on_termination = true
-  }
+  server_details = module.vm_openstack.server_details
+  project_name = basename(abspath("${path.module}/.."))
+  ssh_user = local.config.ssh_user
+  ssh_key_path = local.config.ssh_key_path
 }
 
-resource "openstack_networking_floatingip_v2" "main" {
-  pool = var.server_config.net_ext
-}
+module "vm_openstack" {
+  source = "git::https://github.com/teityura/terraform-modules.git//vm-openstack"
 
-resource "openstack_compute_floatingip_associate_v2" "main" {
-  floating_ip = openstack_networking_floatingip_v2.main.address
-  instance_id = openstack_compute_instance_v2.main.id
+  server_config = var.server_config
+  volume_config = var.volume_config
 }
