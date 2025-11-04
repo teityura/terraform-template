@@ -15,7 +15,6 @@ cd "${project_name}/"
 
 # deploy
 make setup
-vim config.yml
 vim terraform/terraform.tfvars 
 make
 
