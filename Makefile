@@ -6,16 +6,12 @@ cl: clean
 
 setup:
 	@echo "### Setting up and Verifying Configuration ###"
-	@cp --update=none config.yml.sample config.yml
 	@cp --update=none terraform/terraform.tfvars.sample terraform/terraform.tfvars
-	@echo "\n📄 Current 'config.yml':"
-	@echo "========================================================"
-	@cat config.yml
 	@echo "\n📄 Current 'terraform/terraform.tfvars':"
 	@echo "========================================================"
 	@cat terraform/terraform.tfvars
 	@echo "\n========================================================"
-	@echo "✅ Setup complete. Please review the configurations."
+	@echo "✅ Setup complete. Please review the configuration."
 	@echo "========================================================"
 
 init:

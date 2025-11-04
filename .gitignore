@@ -1,5 +1,4 @@
 # Local configuration files (sensitive or user-specific)
-config.yml
 terraform/terraform.tfvars
 
 # Terraform generated files (state, plugins, locks)

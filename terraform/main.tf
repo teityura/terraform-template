@@ -10,22 +10,14 @@ terraform {
 
 provider "openstack" {}
 
-locals {
-  config = yamldecode(file("../config.yml"))
-}
-
 module "ssh_config" {
   source = "git::https://github.com/teityura/terraform-modules.git//ssh-config"
-
-  server_details = module.vm_openstack.server_details
+  servers_detail = module.vm_openstack.servers_detail
   project_name = basename(abspath("${path.module}/.."))
-  ssh_user = local.config.ssh_user
-  ssh_key_path = local.config.ssh_key_path
 }
 
 module "vm_openstack" {
   source = "git::https://github.com/teityura/terraform-modules.git//vm-openstack"
-
-  server_config = var.server_config
-  volume_config = var.volume_config
+  servers_config = var.servers_config 
+  volumes_config = var.volumes_config
 }

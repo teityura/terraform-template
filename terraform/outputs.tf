@@ -3,12 +3,12 @@ output "ssh_config_path" {
   value = module.ssh_config.filename
 }
 
-output "server_details" {
-  description = "Details of the created server."
-  value = module.vm_openstack.server_details
+output "servers_detail" {
+  description = "Details of the created servers."
+  value = module.vm_openstack.servers_detail
 }
 
-output "volume_details" {
-  description = "Details of the created data volume."
-  value = module.vm_openstack.volume_details
+output "volumes_detail" {
+  description = "Details of the created data volumes."
+  value = module.vm_openstack.volumes_detail
 }

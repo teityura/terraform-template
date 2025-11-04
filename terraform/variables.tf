@@ -1,6 +1,6 @@
-variable "server_config" {
-  description = "Configuration for server."
-  type = object({
+variable "servers_config" {
+  description = "Configuration for servers."
+  type = map(object({
     name = string
     flavor_id = string
     image_id = string
@@ -9,14 +9,17 @@ variable "server_config" {
     security_groups = list(string)
     net_int = string
     net_ext = string
-  })
+    ssh_user = string
+    ssh_key_path = string
+  }))
 }
 
-variable "volume_config" {
-  description = "Configuration for volume."
-  type = object({
+variable "volumes_config" {
+  description = "Configuration for volumes."
+  type = map(object({
     volume_size = number
-  })
+    volume_mount_path = optional(string)
+  }))
   default = null
   nullable = true
 }

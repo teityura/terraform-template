@@ -2,31 +2,30 @@
   become: yes
   gather_facts: yes
   gather_subset: min
-  vars_files:
-    - ../config.yml
   tasks:
-    - name: Get server details from terraform output
+    - name: Get server details map from terraform output
       cloud.terraform.terraform_output:
         state_file: ../terraform/terraform.tfstate
-        name: server_details
+        name: servers_detail
       register: _result_tfo_main
 
-    - name: Get volume details from terraform output
+    - name: Get volume details map from terraform output
       cloud.terraform.terraform_output:
         state_file: ../terraform/terraform.tfstate
-        name: volume_details
+        name: volumes_detail
       register: _result_tfo_vol
       failed_when: false
 
-    - name: Define server host in dynamic inventory
+    - name: Define server hosts in dynamic inventory
       add_host:
-        name: "{{ _result_tfo_main.value.name }}"
+        name: "{{ item.value.name }}"
         groups: vms
-        ansible_host: "{{ _result_tfo_main.value.floating_ip }}"
-        ansible_user: "{{ ssh_user }}"
-        ansible_ssh_private_key_file: "{{ ssh_key_path }}"
-        vol_device_path: "{{ _result_tfo_vol.value.device | default(omit) }}"
-        vol_mount_path: "{{ volume_mount_path | default(omit) }}"
+        ansible_host: "{{ item.value.floating_ip }}"
+        ansible_user: "{{ item.value.ssh_user }}"
+        ansible_ssh_private_key_file: "{{ item.value.ssh_key_path }}"
+        vol_device_path: "{{ _result_tfo_vol.value[item.key].device_path | default(omit) }}"
+        vol_mount_path: "{{ _result_tfo_vol.value[item.key].mount_path | default(omit) }}"
+      loop: "{{ _result_tfo_main.value | dict2items }}"
 
 - hosts: vms
   become: yes
