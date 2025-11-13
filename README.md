@@ -1,23 +1,22 @@
 # terraform-template
 
-自宅OpenStack で VM をデプロイする際、  
-Terraform + Ansible で IaC するためのテンプレート
+This repository is a collection of reusable Terraform and Ansible templates for OpenStack VM deployment.
 
-## コピペ用
+## Usage
 
+This template is designed to be used as a git submodule in your project.
+
+### Example Project Structure
+
+``` log
+your-project/
+├── Makefile            # See terraform-project for example
+├── terraform.tfvars    # Your configuration
+├── site.               # Your Ansible playbook
+└── template/           # This repository as submodule
+    ├── terraform/
+    └── ansible/
 ```
-# clone
-project_name="myproject"
-mkdir -p ~/terra/
-cd ~/terra/
-git clone https://github.com/teityura/terraform-template.git "${project_name}"
-cd "${project_name}/"
 
-# deploy
-make config
-vim terraform/terraform.tfvars 
-make
+See [terraform-project](https://github.com/teityura/terraform-project) for a complete example.
 
-# destroy
-make cl
-```

@@ -3,13 +3,6 @@
 default: deploy
 deploy: init apply play
 cl: clean
-conf: config
-
-config:
-	@echo "=== Creating tfvars ==="
-	cp --update=none terraform/terraform.tfvars.sample terraform/terraform.tfvars
-	@echo "=== Current configuration ==="
-	cat terraform/terraform.tfvars
 
 init:
 	terraform -chdir=terraform init
