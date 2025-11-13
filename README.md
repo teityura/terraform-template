@@ -14,7 +14,7 @@ git clone https://github.com/teityura/terraform-template.git "${project_name}"
 cd "${project_name}/"
 
 # deploy
-make setup
+make config
 vim terraform/terraform.tfvars 
 make
 
