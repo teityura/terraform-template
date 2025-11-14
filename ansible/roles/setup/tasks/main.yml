@@ -1,3 +1,4 @@
+---
 - name: Gather facts
   import_tasks: gather_facts.yml
 
