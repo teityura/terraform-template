@@ -1,18 +1,8 @@
-.PHONY: default deploy init apply clean play	
+.PHONY: default deploy config init apply clean play
 
 default: deploy
 deploy: init apply play
 cl: clean
-
-setup:
-	@echo "### Setting up and Verifying Configuration ###"
-	@cp --update=none terraform/terraform.tfvars.sample terraform/terraform.tfvars
-	@echo "\n📄 Current 'terraform/terraform.tfvars':"
-	@echo "========================================================"
-	@cat terraform/terraform.tfvars
-	@echo "\n========================================================"
-	@echo "✅ Setup complete. Please review the configuration."
-	@echo "========================================================"
 
 init:
 	terraform -chdir=terraform init

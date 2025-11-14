@@ -1,4 +1,5 @@
-# Local configuration files (sensitive or user-specific)
+# Local configuration files
+ansible/site.yml
 terraform/terraform.tfvars
 
 # Terraform generated files (state, plugins, locks)
@@ -9,3 +10,4 @@ terraform/terraform.tfstate.backup
 
 # Manually downloaded provider binaries
 terraform/linux_amd64/
+

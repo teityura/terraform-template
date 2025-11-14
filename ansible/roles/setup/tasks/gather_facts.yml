@@ -1,3 +1,4 @@
+---
 - name: Gather facts after connection is established
   setup:
 
