@@ -1,3 +1,4 @@
+---
 - name: Create filesystem
   filesystem:
     fstype: ext4
