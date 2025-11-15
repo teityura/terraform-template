@@ -9,7 +9,7 @@ This template is designed to be used as a git submodule in your project.
 ``` bash
 # Setup (change workspace and project_name as needed)
 workspace="${HOME}/terra"
-project_name="myproject"
+project_name="proj_name"
 
 mkdir -p "${workspace}/${project_name}"
 cd "${workspace}/${project_name}"
