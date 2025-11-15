@@ -28,6 +28,17 @@
         vol_mount_path: "{{ _result_tfo_vol.value[item.key].mount_path | default(omit) }}"
       loop: "{{ _result_tfo_main.value | dict2items }}"
 
+
+- hosts: localhost
+  tasks:
+    - name: Generate inventory file
+      include_role:
+        name: setup
+        tasks_from: generate_inventory
+      vars:
+        Inventory_path: "{{ playbook_dir }}/inventories/hosts"
+
+
 - hosts: vms
   become: yes
   gather_facts: no

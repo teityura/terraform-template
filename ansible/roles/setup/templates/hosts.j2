@@ -1,0 +1,4 @@
+[vms]
+{% for host in groups['vms'] %}
+{{ hostvars[host].inventory_hostname }}
+{% endfor %}

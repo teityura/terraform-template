@@ -1,0 +1,16 @@
+---
+- name: Create inventory directory
+  file:
+    path: "{{ Inventory_path | dirname }}"
+    state: directory
+    mode: '0755'
+
+- name: Generate inventory file
+  template:
+    src: hosts.j2
+    dest: "{{ Inventory_path }}"
+    mode: '0644'
+
+- name: Display inventory content
+  debug:
+    msg: "{{ lookup('file', Inventory_path).split('\n') }}"

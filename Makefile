@@ -1,8 +1,12 @@
-.PHONY: default deploy config init apply clean play
+.PHONY: default deploy tfvars init apply clean play
 
 default: deploy
 deploy: init apply play
 cl: clean
+
+tfvars:
+	test -f terraform/terraform.tfvars || \
+	  cp terraform/terraform.tfvars.sample terraform/terraform.tfvars
 
 init:
 	terraform -chdir=terraform init
@@ -11,7 +15,7 @@ apply: init
 	terraform -chdir=terraform apply -auto-approve
 
 play:
-	(cd ansible && ansible-playbook -v site.yml)
+	(cd ansible && ansible-playbook -v setup.yml)
 
 clean:
 	terraform -chdir=terraform destroy -auto-approve
