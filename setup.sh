@@ -22,4 +22,10 @@ fi
 ln -sf template/ansible/ansible.cfg ansible.cfg
 test -f .gitignore || echo 'ansible.cfg' > .gitignore
 
+# show summary
+set -x
+pwd
+ls -al --color=always
+{ set +x; } 2>/dev/null
+
 exit 0

@@ -12,7 +12,7 @@ workspace="${HOME}/terra"
 project_name="proj_name"
 
 mkdir -p "${workspace}/${project_name}"
-cd "${workspace}/${project_name}"
+cd "${workspace}/${project_name}/"
 git init
 git submodule add https://github.com/teityura/terraform-template.git template
 
@@ -20,34 +20,38 @@ git submodule add https://github.com/teityura/terraform-template.git template
 cd template && make tfvars
 vim terraform/terraform.tfvars
 make
+./setup.sh
+
+# Play
+cd "${workspace}/${project_name}/"
+ansible-playbook site.yml
 
 # Destroy
-make clean
+cd template && make clean
 ```
 
 ### Example Project Structure
 
 ``` log
 ~/terra/proj_name/
-├── site.yml                # Your Ansible playbook
-├── inventory/
-│   ├── hosts               # Your Ansible inventory
+├── .git/
+├── .gitignore              # Excludes ansible.cfg
+├── .gitmodules
+├── ansible.cfg -> template/ansible/ansible.cfg  # Linked config
+├── site.yml                # Main playbook
+├── inventories/
+│   ├── hosts               # Inventory definitions
 │   ├── host_vars/
 │   └── group_vars/
-|       └── vms/
+|       └── all/
 |           └── main.yml
-├── template/               # This repository as submodule
-│   ├── terraform/
-│   └── ansible/
-└── roles/                  # Your Ansible roles
-```
-
-## Optional Settings
-
-``` log
-cd ~/terra/proj_name/
-bash template/setup.sh
-ansible-playbook site.yml
+├── roles/                  # Ansible roles
+│   └── sample/
+|       └── tasks/
+|           └── main.yml
+└── template/               # Submodule (terraform-template)
+    ├── terraform/
+    └── ansible/
 ```
 
 ## Update Submodule
