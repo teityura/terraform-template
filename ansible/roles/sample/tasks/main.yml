@@ -1,0 +1,19 @@
+---
+- name: Show system information
+  shell: |
+    echo "=== Hostname ==="
+    cat /etc/hostname
+    echo -e "\n=== OS Release ==="
+    cat /etc/os-release
+    echo -e "\n=== CPU ==="
+    lscpu | head -15
+    echo -e "\n=== Memory ==="
+    free -h
+    echo -e "\n=== Block Devices ==="
+    lsblk
+  register: _result_sysinfo
+  changed_when: false
+
+- name: Display system information
+  debug:
+    var: _result_sysinfo.stdout_lines

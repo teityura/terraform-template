@@ -20,7 +20,7 @@
     - name: Define server hosts in dynamic inventory
       add_host:
         name: "{{ item.value.name }}"
-        groups: vms
+        groups: all
         ansible_host: "{{ item.value.floating_ip }}"
         ansible_user: "{{ item.value.ssh_user }}"
         ansible_ssh_private_key_file: "{{ item.value.ssh_key_path }}"
@@ -28,7 +28,18 @@
         vol_mount_path: "{{ _result_tfo_vol.value[item.key].mount_path | default(omit) }}"
       loop: "{{ _result_tfo_main.value | dict2items }}"
 
-- hosts: vms
+
+- hosts: localhost
+  tasks:
+    - name: Generate inventory file
+      include_role:
+        name: setup
+        tasks_from: generate_inventory
+      vars:
+        Inventory_path: "{{ playbook_dir }}/inventories/hosts"
+
+
+- hosts: all
   become: yes
   gather_facts: no
   pre_tasks:

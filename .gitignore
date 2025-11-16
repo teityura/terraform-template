@@ -1,5 +1,5 @@
 # Local configuration files
-ansible/site.yml
+ansible/inventory/hosts
 terraform/terraform.tfvars
 
 # Terraform generated files (state, plugins, locks)
