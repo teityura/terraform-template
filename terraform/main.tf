@@ -13,7 +13,7 @@ provider "openstack" {}
 module "ssh_config" {
   source = "git::https://github.com/teityura/terraform-modules.git//ssh-config"
   servers_detail = module.vm_openstack.servers_detail
-  project_name = basename(abspath("${path.module}/.."))
+  project_name = basename(abspath("${path.module}/../.."))
 }
 
 module "vm_openstack" {
