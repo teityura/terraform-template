@@ -7,14 +7,20 @@ This repository is a collection of reusable Terraform and Ansible templates for 
 This template is designed to be used as a git submodule in your project.
 
 ``` bash
-# Setup (change workspace and project_name as needed)
+# Setup
 workspace="${HOME}/terra"
 project_name="proj_name"
+remote_url="repo_url"
 
 mkdir -p "${workspace}/${project_name}"
 cd "${workspace}/${project_name}/"
-git init
+git init --initial-branch=main
+git remote add origin "${remote_url}"
 git submodule add https://github.com/teityura/terraform-template.git template
+touch README.md
+git add README.md
+git commit -m 'Initial commit'
+git push origin main
 
 # Deploy
 cd template && make tfvars
