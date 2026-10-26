@@ -20,7 +20,16 @@ fi
 
 # link ansible.cfg
 ln -sf template/ansible/ansible.cfg ansible.cfg
-test -f .gitignore || echo 'ansible.cfg' > .gitignore
+
+# create secrets file
+secrets=inventories/group_vars/all/secrets.yml
+mkdir -p "$(dirname "$secrets")"
+test -f "$secrets" || (umask 077 && echo '---' > "$secrets")
+
+# keep ansible.cfg and secrets.yml out of git
+for f in ansible.cfg secrets.yml; do
+  grep -qxF "$f" .gitignore 2>/dev/null || echo "$f" >> .gitignore
+done
 
 # show summary
 set -x
